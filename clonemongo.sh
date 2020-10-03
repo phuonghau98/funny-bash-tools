@@ -80,17 +80,28 @@ check_dependencies () {
 
 check_dependencies
 
-print_section "Clone database"
+print_section "SELECT SOURCE PLATFORM"
 
 echo "Which platform does source Mongo instance is running on?"
 prompt_choice RUNNING_INSTANCE_PLATFORM "docker native"
 
 case $RUNNING_INSTANCE_PLATFORM in
     docker)
-        echo "Which container is your MongoDB?"
-        docker ps | grep 27017 | awk '{print $1" "$2}'
+        containers=()
+        databases=()
+        print_section "SELECT SOURCE CONTAINER"
+        echo "Which container is your MongoDB source?"
+        IFS=$'\n' read -d '' -r -a containers < <(docker ps | grep 27017 | awk '{print $1"_"$2}')
+        SELECTED_CONTAINER=''
+        prompt_choice SELECTED_CONTAINER $containers
+        echo $SELECTED_CONTAINER
+        # docker exec -it 44fd8ebc85ef mongo --eval "db.adminCommand('listDatabases')" | grep -oP "(?<=\"name\" : \")\w+"
+        print_section "SELECT SOURCE DATABASE"
+        IFS=' ' read -r -a databases < <(docker exec -it 44fd8ebc85ef mongo --eval "db.adminCommand('listDatabases')" | grep -oP "(?<=\"name\" : \")\w+" | tr '\n' ' ')
+        ch="${databases[@]}"
+        prompt_choice SELECTED_DATABASE "$ch"
         ;;
     *)
-        echo "Unknown platform"
+        echo "Unimplemented platform"
         ;;
 esac
