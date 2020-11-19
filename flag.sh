@@ -35,7 +35,6 @@ do
 	--cache|-c)
 		CACHE_DIRECTORY="$2"
 		shift
-		shift
 		;;
 	--*)
 		echo "Error: Unknown flag"

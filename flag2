@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+
+OPTION1=false
+OPTION2=true
+
+while [ "$#" != 0 ]
+do
+	case $1 in
+		--option1=*|-o1=*)
+			OPTION1=${1#*=}
+			shift
+			;;
+		--option1|-o1)
+			OPTION1="$2"
+			shift
+			shift
+			;;
+		--option2=*|-o2=*)
+			OPTION2=${1#*=}
+			shift
+			;;
+		--option2|-o2)
+			OPTION2="$2"
+			shift
+			shift
+			;;
+		--*|-*)
+			echo 'Err: Unknown option'
+			exit 1
+	esac
+done
+
+echo "OPTION1: $OPTION1"
+echo "OPTION2: $OPTION2"
