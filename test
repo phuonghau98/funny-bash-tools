@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+
+#read -d '' sampledata <<EOF
+#hello
+#world
+#EOF
+
+sort txt | while read line; do
+	echo $line
+done
+
+while read line
+do
+	echo $line
+done < <(sort txt)
