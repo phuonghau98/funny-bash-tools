@@ -27,10 +27,7 @@ for container_info in info_lines:
 
 # Get database names of each container
 for container_name in containers:
-    get_db_name_process = subprocess.Popen(
-        'docker exec mongo mongo --quiet --eval printjson(db.adminCommand(\'listDatabases\'))'.split(), stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-    command = "docker exec mongo mongo --quiet --eval printjson(db.adminCommand('listDatabases'))".split(
-    )
+    command = "docker exec {container_name} mongo --quiet --eval printjson(db.adminCommand('listDatabases'))".format(container_name=container_name).split()
     stdo, stde = subprocess.Popen(
         command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()
     stdo = str(stdo, 'utf-8')
