@@ -21,7 +21,9 @@ for container_info in info_lines:
     host = '127.0.0.1'
     port = container_info.split('->')[0].split(':')[1]
     name = container_info.split('#')[0]
-    containers[name] = {'host': host, 'port': port, 'name': name}
+    # Ignore main instance
+    if port != '27017':
+        containers[name] = {'host': host, 'port': port, 'name': name}
 
 # Get database names of each container
 for container_name in containers:
