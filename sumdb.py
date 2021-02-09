@@ -49,8 +49,10 @@ for container_name in containers:
     tmp_dump_path = os.path.join(dump_folder_path, container_name)
     if not os.path.exists(tmp_dump_path):
         os.mkdir(tmp_dump_path)
-
+    # Loop each database(string) of each instance
     for database_name in containers[container_name]['databases']:
         out_archive = os.path.join(tmp_dump_path, database_name + '.tar.gz')
         os.system('mongodump --host {host} --port {port} --db {dbname} --archive={out_path}'.format(
             host=containers[container_name]['host'], port=containers[container_name]['port'], out_path=out_archive, dbname=database_name))
+        os.system('mongorestore --archive="{out_archive}" --nsFrom="{db_name}.*" --nsTo="{container_name}_{db_name}.*" '.format(
+            out_archive=out_archive, db_name=database_name, container_name=container_name))
