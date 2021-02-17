@@ -3,6 +3,9 @@ import subprocess
 import re
 import shutil
 
+print('Chuong trinh xoa node_modules'.center(50))
+print('\n\n')
+
 find_command = 'find {cwd} -maxdepth 5 -type d -name node_modules'.format(
     cwd=os.getcwd()).split()
 
@@ -11,6 +14,11 @@ stdout, _ = subprocess.Popen(find_command,
                           stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).communicate()
 
 stdout = str(stdout, 'utf-8')
+
+if len(stdout) == 0:
+    print('Co ve nhu khong co node_modules duoc tim thay, bye bye!\n')
+    os._exit(1)
+
 node_module_paths = []
 unique_node_module_paths = []
 
