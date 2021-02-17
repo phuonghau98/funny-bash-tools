@@ -3,8 +3,7 @@ import subprocess
 import re
 import shutil
 
-print('Chuong trinh xoa node_modules'.center(50))
-print('\n\n')
+print('\nChuong trinh xoa node_modules\n'.center(50))
 
 find_command = 'find {cwd} -maxdepth 5 -type d -name node_modules'.format(
     cwd=os.getcwd()).split()
