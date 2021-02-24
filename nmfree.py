@@ -49,8 +49,8 @@ while True:
             ids_to_keep[idx] = int(v)
             if ids_to_keep[idx] < 0 or ids_to_keep[idx] > len(unique_node_module_paths) - 1:
                 raise ValueError
-    except ValueError:
-        print('Index khong hop le, vui long nhap lai')
+    except ValueError as e:
+        print('Index khong hop le, vui long nhap lai', e)
         continue
 
     break
