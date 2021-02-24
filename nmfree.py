@@ -43,6 +43,8 @@ print('\n\n')
 ids_to_keep = []
 while True:
     ids = input('Nhap index ban muon giu lai (ngan cach boi dau phay), hoac bo trong neu muon xoa het: ')
+    if len(ids) == 0:
+        break
     ids_to_keep = ids.split(',')
     try:
         for idx, v in enumerate(ids_to_keep):
